@@ -54,9 +54,9 @@ class Graph:
             if v not in visited:
                 ans.append(str(v))
                 visited.add(v)
-            for sv in self.vertices[v]:
-                if sv not in visited:
-                    stack.push(sv)
+                for sv in self.vertices[v]:
+                    if sv not in visited:
+                        stack.push(sv)
         print('DFT: ', ', '.join(ans))
     def dft_recursive(self, starting_vertex):
         """
@@ -68,9 +68,9 @@ class Graph:
             if v not in visited:
                 ans.append(str(v))
                 visited.add(v)
-            for sv in self.vertices[v]:
-                if sv not in visited:
-                    traverse(sv, visited, ans)
+                for sv in self.vertices[v]:
+                    if sv not in visited:
+                        traverse(sv, visited, ans)
             return ans
         print('DFT: ', ', '.join(traverse(starting_vertex)), ' (recursive)')
     def bfs(self, starting_vertex, destination_vertex):
