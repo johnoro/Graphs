@@ -22,40 +22,31 @@ class Graph:
             self.vertices[v1].add(v2)
         else:
             raise ValueError('Given vertices must exist!')
+    def traverse(self, start, Data, on, off):
+        ans = []
+        visited = set()
+        data = Data(start)
+        while data.size() > 0:
+            v = getattr(data, off)()
+            if v not in visited:
+                ans.append(str(v))
+                visited.add(v)
+                for sv in self.vertices[v]:
+                    if sv not in visited:
+                        getattr(data, on)(sv)
+        return ', '.join(ans)
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        ans = []
-        visited = set()
-        queue = Queue(starting_vertex)
-        while queue.size() > 0:
-            v = queue.dequeue()
-            if v not in visited:
-                ans.append(str(v))
-                visited.add(v)
-                for sv in self.vertices[v]:
-                    if sv not in visited:
-                        queue.enqueue(sv)
-        print('BFT: ', ', '.join(ans))
+        print('BFT: ', self.traverse(starting_vertex, Queue, 'enqueue', 'dequeue'))
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        ans = []
-        visited = set()
-        stack = Stack(starting_vertex)
-        while stack.size() > 0:
-            v = stack.pop()
-            if v not in visited:
-                ans.append(str(v))
-                visited.add(v)
-                for sv in self.vertices[v]:
-                    if sv not in visited:
-                        stack.push(sv)
-        print('DFT: ', ', '.join(ans))
+        print('DFT: ', self.traverse(starting_vertex, Stack, 'push', 'pop'))
     def dft_recursive(self, starting_vertex):
         """
         Print each vertex in depth-first order
@@ -71,7 +62,7 @@ class Graph:
                         traverse(sv, visited, ans)
             return ans
         print('DFT: ', ', '.join(traverse(starting_vertex)), ' (recursive)')
-    def search_helper(self, start, dest, Data, on, off):
+    def search(self, start, dest, Data, on, off):
         data = Data([start])
         visited = set()
         while data.size() > 0:
@@ -90,14 +81,14 @@ class Graph:
         starting_vertex to destination_vertex in
         breadth-first order.
         """
-        return self.search_helper(starting_vertex, destination_vertex, Queue, 'enqueue', 'dequeue')
+        return self.search(starting_vertex, destination_vertex, Queue, 'enqueue', 'dequeue')
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        return self.search_helper(starting_vertex, destination_vertex, Stack, 'push', 'pop')
+        return self.search(starting_vertex, destination_vertex, Stack, 'push', 'pop')
 
 
 if __name__ == '__main__':
