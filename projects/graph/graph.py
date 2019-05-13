@@ -64,12 +64,20 @@ class Graph:
         beginning from starting_vertex.
         This should be done using recursion.
         """
-        pass  # TODO
+        def traverse(v, visited = set(), ans = []):
+            if v not in visited:
+                ans.append(str(v))
+                visited.add(v)
+            for sv in self.vertices[v]:
+                if sv not in visited:
+                    traverse(sv, visited, ans)
+            return ans
+        print(', '.join(traverse(starting_vertex)))
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
-        breath-first order.
+        breadth-first order.
         """
         pass  # TODO
     def dfs(self, starting_vertex, destination_vertex):
