@@ -39,7 +39,7 @@ class Graph:
             for sv in self.vertices[v]:
                 if sv not in visited:
                     queue.enqueue(sv)
-        print(', '.join(ans))
+        print('BFT: ', ', '.join(ans))
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
@@ -57,7 +57,7 @@ class Graph:
             for sv in self.vertices[v]:
                 if sv not in visited:
                     stack.push(sv)
-        print(', '.join(ans))
+        print('DFT: ', ', '.join(ans))
     def dft_recursive(self, starting_vertex):
         """
         Print each vertex in depth-first order
@@ -72,7 +72,7 @@ class Graph:
                 if sv not in visited:
                     traverse(sv, visited, ans)
             return ans
-        print(', '.join(traverse(starting_vertex)))
+        print('DFT: ', ', '.join(traverse(starting_vertex)), ' (recursive)')
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
@@ -118,7 +118,7 @@ if __name__ == '__main__':
 
     '''
     Valid BFT paths:
-        1, 2, 3, 4, 5, 6, 7
+        1, 2, 3, 4, 5, 6, 7 *
         1, 2, 3, 4, 5, 7, 6
         1, 2, 3, 4, 6, 7, 5
         1, 2, 3, 4, 6, 5, 7
@@ -137,14 +137,14 @@ if __name__ == '__main__':
     Valid DFT paths:
         1, 2, 3, 5, 4, 6, 7
         1, 2, 3, 5, 4, 7, 6
-        1, 2, 4, 7, 6, 3, 5
+        1, 2, 4, 7, 6, 3, 5 *
         1, 2, 4, 6, 3, 5, 7
     '''
     graph.dft(1)
 
     '''
     Valid DFT recursive paths:
-        1, 2, 3, 5, 4, 6, 7
+        1, 2, 3, 5, 4, 6, 7  *
         1, 2, 3, 5, 4, 7, 6
         1, 2, 4, 7, 6, 3, 5
         1, 2, 4, 6, 3, 5, 7
