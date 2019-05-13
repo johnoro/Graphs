@@ -29,8 +29,7 @@ class Graph:
         """
         ans = []
         visited = set()
-        queue = Queue()
-        queue.enqueue(starting_vertex)
+        queue = Queue(starting_vertex)
         while queue.size() > 0:
             v = queue.dequeue()
             if v not in visited:
@@ -47,8 +46,7 @@ class Graph:
         """
         ans = []
         visited = set()
-        stack = Stack()
-        stack.push(starting_vertex)
+        stack = Stack(starting_vertex)
         while stack.size() > 0:
             v = stack.pop()
             if v not in visited:
@@ -79,7 +77,20 @@ class Graph:
         starting_vertex to destination_vertex in
         breadth-first order.
         """
-        pass  # TODO
+        queue = Queue([starting_vertex])
+        visited = set()
+        while queue.size() > 0:
+            # print('Q', queue.queue)
+            path = queue.dequeue()
+            v = path[-1]
+            if v != destination_vertex:
+                if v not in visited:
+                    visited.add(v)
+                    for sv in self.vertices[v]:
+                        if sv not in visited:
+                            queue.enqueue(path + [sv])
+            else:
+                return path
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
@@ -157,13 +168,13 @@ if __name__ == '__main__':
 
     '''
     Valid BFS path:
-        [1, 2, 4, 6]
+        [1, 2, 4, 6] *
     '''
-    print(graph.bfs(1, 6))
+    print('BFS: ', graph.bfs(1, 6))
 
     '''
     Valid DFS paths:
         [1, 2, 4, 6]
         [1, 2, 4, 7, 6]
     '''
-    print(graph.dfs(1, 6))
+    print('DFS: ', graph.dfs(1, 6))

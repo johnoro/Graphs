@@ -1,6 +1,9 @@
 class Queue():
-    def __init__(self):
-        self.queue = []
+    def __init__(self, start=None):
+        if start is None:
+            self.queue = []
+        else:
+            self.queue = [start]
     def enqueue(self, value):
         self.queue.append(value)
     def dequeue(self):
@@ -13,8 +16,11 @@ class Queue():
 
 
 class Stack():
-    def __init__(self):
-        self.stack = []
+    def __init__(self, start=None):
+        if start is None:
+            self.stack = []
+        else:
+            self.stack = [start]
     def push(self, value):
         self.stack.append(value)
     def pop(self):
