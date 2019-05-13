@@ -71,45 +71,33 @@ class Graph:
                         traverse(sv, visited, ans)
             return ans
         print('DFT: ', ', '.join(traverse(starting_vertex)), ' (recursive)')
+    def search_helper(self, start, dest, Data, on, off):
+        data = Data([start])
+        visited = set()
+        while data.size() > 0:
+            path = getattr(data, off)()
+            v = path[-1]
+            if v == dest:
+                return path
+            if v not in visited:
+                visited.add(v)
+                for sv in self.vertices[v]:
+                    if sv not in visited:
+                        getattr(data, on)(path + [sv])
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
         breadth-first order.
         """
-        queue = Queue([starting_vertex])
-        visited = set()
-        while queue.size() > 0:
-            # print('Q', queue.queue)
-            path = queue.dequeue()
-            v = path[-1]
-            if v != destination_vertex:
-                if v not in visited:
-                    visited.add(v)
-                    for sv in self.vertices[v]:
-                        if sv not in visited:
-                            queue.enqueue(path + [sv])
-            else:
-                return path
+        return self.search_helper(starting_vertex, destination_vertex, Queue, 'enqueue', 'dequeue')
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        visited = set()
-        stack = Stack([starting_vertex])
-        while stack.size() > 0:
-            path = stack.pop()
-            v = path[-1]
-            if v != destination_vertex:
-                if v not in visited:
-                    visited.add(v)
-                    for sv in self.vertices[v]:
-                        if sv not in visited:
-                            stack.push(path + [sv])
-            else:
-                return path
+        return self.search_helper(starting_vertex, destination_vertex, Stack, 'push', 'pop')
 
 
 if __name__ == '__main__':
