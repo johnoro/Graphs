@@ -97,7 +97,19 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        visited = set()
+        stack = Stack([starting_vertex])
+        while stack.size() > 0:
+            path = stack.pop()
+            v = path[-1]
+            if v != destination_vertex:
+                if v not in visited:
+                    visited.add(v)
+                    for sv in self.vertices[v]:
+                        if sv not in visited:
+                            stack.push(path + [sv])
+            else:
+                return path
 
 
 if __name__ == '__main__':
@@ -175,6 +187,6 @@ if __name__ == '__main__':
     '''
     Valid DFS paths:
         [1, 2, 4, 6]
-        [1, 2, 4, 7, 6]
+        [1, 2, 4, 7, 6] *
     '''
     print('DFS: ', graph.dfs(1, 6))
