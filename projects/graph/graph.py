@@ -36,9 +36,9 @@ class Graph:
             if v not in visited:
                 ans.append(str(v))
                 visited.add(v)
-            for sv in self.vertices[v]:
-                if sv not in visited:
-                    queue.enqueue(sv)
+                for sv in self.vertices[v]:
+                    if sv not in visited:
+                        queue.enqueue(sv)
         print('BFT: ', ', '.join(ans))
     def dft(self, starting_vertex):
         """
