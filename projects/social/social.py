@@ -1,8 +1,10 @@
-
+import random
+from queue import Queue
 
 class User:
     def __init__(self, name):
         self.name = name
+
 
 class SocialGraph:
     def __init__(self):
@@ -26,7 +28,7 @@ class SocialGraph:
         """
         Create a new user with a sequential integer ID
         """
-        self.lastID += 1  # automatically increment the ID to assign the new user
+        self.lastID += 1
         self.users[self.lastID] = User(name)
         self.friendships[self.lastID] = set()
 
@@ -40,15 +42,29 @@ class SocialGraph:
 
         The number of users must be greater than the average number of friendships.
         """
+        if numUsers <= avgFriendships:
+            raise ValueError('The number of users must be greater than the average number of friendships!')
+        
         # Reset graph
         self.lastID = 0
         self.users = {}
         self.friendships = {}
-        # !!!! IMPLEMENT ME
-
+        
         # Add users
+        for n in range(1, numUsers+1):
+            self.addUser(n)
 
-        # Create friendships
+        # Create friendship combinations in random order
+        combos = []
+        for n in range(1, numUsers+1):
+            for f in range(n+1, self.lastID+1):
+                combos.append([n, f])
+        random.shuffle(combos)
+
+        # Add friendships
+        for f in range(avgFriendships*numUsers//2):
+            n, f = combos[f]
+            self.addFriendship(n, f)
 
     def getAllSocialPaths(self, userID):
         """
@@ -59,14 +75,23 @@ class SocialGraph:
 
         The key is the friend's ID and the value is the path.
         """
-        visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+        visited = {}
+        paths = Queue([userID])
+        while paths.size() > 0:
+            path = paths.dequeue()
+            u = path[-1]
+            if u not in visited:
+                visited[u] = path
+                for f in self.friendships[u]:
+                    if f not in visited:
+                        paths.enqueue(path + [f])
         return visited
 
 
 if __name__ == '__main__':
     sg = SocialGraph()
-    sg.populateGraph(10, 2)
-    print(sg.friendships)
+    sg.populateGraph(1000, 5)
+    print('\nFriendships: ', sg.friendships)
+    print()
     connections = sg.getAllSocialPaths(1)
-    print(connections)
+    print('Connections: ', connections, '\n', len(connections.keys()))

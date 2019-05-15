@@ -48,9 +48,11 @@ Note that in this sample, Users 3, 4 and 9 are not in User 1's extended social n
 
 1. To create 100 users with an average of 10 friends each, how many times would you need to call `addFriendship()`? Why?
 
+You'd need to call it 500 times. This is because `addFriendship` adds the friendship in both directions for you; if user A is a new friend to user B, user B will be friends with user A in turn with just one call of `addFriendship`. For the actually equation, it looks something like this: number of users divided by two, times the average number of friends a user has.
+
 2. If you create 1000 users with an average of 5 random friends each, what percentage of other users will be in a particular user's extended social network? What is the average degree of separation between a user and those in his/her extended network?
 
-
+*Most* of them, although I have no clue how to get an exact percentage (besides brute force with a bunch of testing). Something like 99% is my best guess. This seems to increase exponentially based on the number of friends-- the number of users isn't quite as important.
 
 ## 4. Stretch Goal
 
